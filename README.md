@@ -13,3 +13,14 @@ npm install flint-model-editor --save
 import ModelEditor from 'flint-model-editor';
 ```
 
+## Example
+
+```jsx
+const onSaved = (modelData, editorData) => {
+  console.log(modelData, editorData);
+};
+<ModelEditor
+  editorData={editorData}
+  onSaved={onSaved}
+/>
+```
