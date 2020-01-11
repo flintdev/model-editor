@@ -16,9 +16,11 @@ import ModelEditor from 'flint-model-editor';
 ## Example
 
 ```jsx
-const onSaved = (modelData, editorData) => {
-  console.log(modelData, editorData);
+const onSaved = (schemaData, editorData) => {
+  // schemaData is the openapiv3 schema
+  console.log(schemaData, editorData);
 };
+// 
 <ModelEditor
   editorData={editorData}
   onSaved={onSaved}
