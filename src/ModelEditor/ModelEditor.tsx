@@ -10,7 +10,8 @@ const styles = createStyles({
 });
 
 export interface Props extends WithStyles<typeof styles> {
-
+    editorData?: object,
+    onSaved?: (schemaData: object, editorData: object) => void,
 }
 
 class ModelEditor extends React.Component<Props, object> {
@@ -21,7 +22,7 @@ class ModelEditor extends React.Component<Props, object> {
     }
 
     render() {
-        const {classes} = this.props;
+        const {classes, editorData, onSaved} = this.props;
         return (
             <Provider store={store}>
                 <div className={classes.root}>
