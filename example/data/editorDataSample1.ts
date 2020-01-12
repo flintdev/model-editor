@@ -1,12 +1,17 @@
+import {EditorData} from "../../src/interface";
 
-export const editorDataSample1 = {
+export const editorDataSample1: EditorData = {
     treeData: [
         {
             id: 'root-creator',
             name: 'creator',
             type: 'object',
             children: [
-
+                {
+                    id: 'root-creator-name',
+                    name: 'name',
+                    type: 'string',
+                }
             ]
         },
         {

@@ -31,7 +31,7 @@ class ExampleContainer extends React.Component<Props, object> {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <Tabs defaultActiveKey="1">
+                <Tabs defaultActiveKey="2">
                     <TabPane tab="New Model Editor" key="1">
                         Content of Tab Pane 1
                     </TabPane>

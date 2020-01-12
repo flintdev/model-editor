@@ -1,5 +1,5 @@
 
-export enum NodeType {
+export enum NodeTypeOption {
     string = 'string',
     number = 'number',
     integer = 'integer',
@@ -7,6 +7,8 @@ export enum NodeType {
     array = 'array',
     object = 'object',
 }
+
+export type NodeType = "string" | "number" | "integer" | "boolean" | "array" | "object";
 
 export enum StringFormat {
     date = 'date',
@@ -33,7 +35,7 @@ export interface TreeNode {
     type: NodeType,
     id: string,
     name: string,
-    params: NodeParams,
+    params?: NodeParams,
     children?: Array<TreeNode>
 }
 
