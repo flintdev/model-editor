@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from "redux";
 import { StoreState } from "src/redux/state";
 import * as actions from "src/redux/modules/schemaTree/actions";
-import { Tree } from 'antd';
+import { Tree, Switch } from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
 
 const { TreeNode } = Tree;
@@ -27,7 +27,7 @@ export interface Props extends WithStyles<typeof styles>{
 
 class SchemaTreeContainer extends React.Component<Props, object> {
     state = {
-
+        expandedKeys: ['root']
     };
 
     componentDidMount(): void {
@@ -38,6 +38,22 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         }
     }
 
+    recurToGetNodeIds = (nodeIds: Array<string>, node: TreeNodeInterface) => {
+        const {id, children} = node;
+        nodeIds.push(id);
+        if (!!children) {
+            children.forEach(node => this.recurToGetNodeIds(nodeIds, node));
+        }
+    };
+
+    getAllNodeIds = (treeData: Array<TreeNodeInterface>) => {
+        let nodeIds: Array<string> = ['root'];
+        treeData.forEach(node => {
+            this.recurToGetNodeIds(nodeIds, node);
+        });
+        return nodeIds;
+    };
+
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
         const {id, name, type, children} = node;
         return (
@@ -47,11 +63,32 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         )
     };
 
+    handleSwitchChange = (checked: boolean) => {
+        const {treeData} = this.props;
+        let expandedKeys: Array<string>;
+        if (checked) {
+            expandedKeys = this.getAllNodeIds(treeData);
+        } else {
+            expandedKeys = ['root'];
+        }
+        this.setState({expandedKeys});
+    };
+
     render() {
         const {classes, modelName, treeData, nodeSelected} = this.props;
+        const {expandedKeys} = this.state;
         return (
             <div className={classes.root}>
-                <Tree>
+                <Switch
+                    onChange={this.handleSwitchChange}
+                    checkedChildren={"Expanded All"}
+                    unCheckedChildren={"Collapsed"}
+                />
+                <br />
+                <Tree
+                    defaultExpandedKeys={expandedKeys}
+                    // expandedKeys={expandedKeys}
+                >
                     <TreeNode title={modelName} key={'root'}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
                     </TreeNode>
