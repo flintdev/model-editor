@@ -10,6 +10,7 @@ const styles = createStyles({
 });
 
 export interface Props extends WithStyles<typeof styles> {
+    modelName: string,
     editorData?: object,
     onSaved?: (schemaData: object, editorData: object) => void,
 }
