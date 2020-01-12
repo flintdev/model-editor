@@ -3,6 +3,8 @@
 import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
 import { Tabs } from 'antd';
+import {editorDataSample1} from "./data/editorDataSample1";
+import ModelEditor from "../src/ModelEditor";
 
 const { TabPane } = Tabs;
 
@@ -34,7 +36,10 @@ class ExampleContainer extends React.Component<Props, object> {
                         Content of Tab Pane 1
                     </TabPane>
                     <TabPane tab="Update Existing Editor" key="2">
-                        Content of Tab Pane 2
+                        <ModelEditor
+                            modelName={"ExampleModel"}
+                            editorData={editorDataSample1}
+                        />
                     </TabPane>
                 </Tabs>
             </div>

@@ -10,6 +10,11 @@ export function reducer(state: object, action: SchemaTreeAction) {
             return update(state, {
                 nodeSelected: {$set: action.node},
             });
+        case types.SET_TREE_DATA:
+            return update(state, {
+                treeData: {$set: action.treeData}
+            });
+
         default:
             return state;
     }

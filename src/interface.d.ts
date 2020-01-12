@@ -37,4 +37,12 @@ export interface TreeNode {
     children?: Array<TreeNode>
 }
 
+export interface EditorData {
+    treeData: Array<TreeNode>
+}
 
+export interface ModelEditorProps {
+    modelName: string,
+    editorData?: EditorData,
+    onSaved?: (schemaData: object, editorData: object) => void,
+}
