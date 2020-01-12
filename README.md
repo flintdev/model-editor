@@ -22,6 +22,7 @@ const onSaved = (schemaData, editorData) => {
 };
 // 
 <ModelEditor
+  modelName={"userdata"}
   editorData={editorData}
   onSaved={onSaved}
 />
