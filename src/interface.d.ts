@@ -8,7 +8,7 @@ export enum NodeTypeOption {
     object = 'object',
 }
 
-export type NodeType = "string" | "number" | "integer" | "boolean" | "array" | "object";
+export type NodeType = "root" | "string" | "number" | "integer" | "boolean" | "array" | "object";
 
 export enum StringFormat {
     date = 'date',

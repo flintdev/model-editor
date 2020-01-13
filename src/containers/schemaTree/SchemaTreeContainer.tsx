@@ -116,14 +116,17 @@ class SchemaTreeContainer extends React.Component<Props, object> {
 
     handleTreeNodeRightClick = (options: AntTreeNodeMouseEvent) => {
         const {event, node} = options;
-        console.log(event, node);
     };
 
     handleTreeNodeSelect = (selectedKeys: string[]) => {
-        console.log(selectedKeys);
         if (selectedKeys.length > 0) {
             const nodeId = selectedKeys[0];
-            const treeNodeSelected: TreeNodeInterface = this.treeNodeMap[nodeId];
+            let treeNodeSelected: TreeNodeInterface;
+            if (nodeId === 'root') {
+                treeNodeSelected = {id: nodeId, type: "root", name: this.props.modelName};
+            } else {
+                treeNodeSelected = this.treeNodeMap[nodeId];
+            }
             this.props.selectNode(treeNodeSelected);
         } else {
             this.props.selectNode(null);
@@ -132,7 +135,6 @@ class SchemaTreeContainer extends React.Component<Props, object> {
 
     render() {
         const {classes, modelName, treeData, nodeSelected} = this.props;
-        console.log('node selected', nodeSelected);
         const {expandedKeys} = this.state;
         return (
             <div className={classes.root}>
@@ -148,7 +150,7 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                     onRightClick={this.handleTreeNodeRightClick}
                     onSelect={this.handleTreeNodeSelect}
                 >
-                    <TreeNode title={modelName} key={'root'} selectable={false}>
+                    <TreeNode title={modelName} key={'root'}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
                     </TreeNode>
                 </Tree>
