@@ -1,23 +1,22 @@
 //
 
 import * as React from 'react';
-import { withStyles, WithStyles, createStyles } from '@material-ui/styles';
-import { connect } from 'react-redux';
-import { Dispatch } from "redux";
-import { StoreState } from "src/redux/state";
+import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
+import {connect} from 'react-redux';
+import {Dispatch} from "redux";
+import {StoreState} from "src/redux/state";
 import * as actions from "src/redux/modules/schemaTree/actions";
-import { Tree, Switch } from 'antd';
+import {Tree, Switch, Menu, Dropdown} from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
+import {AntTreeNodeMouseEvent} from "antd/lib/tree";
 
-const { TreeNode } = Tree;
+const {TreeNode} = Tree;
 
 const styles = createStyles({
-    root: {
-
-    },
+    root: {},
 });
 
-export interface Props extends WithStyles<typeof styles>{
+export interface Props extends WithStyles<typeof styles> {
     modelName: string,
     editorData: EditorData,
     treeData: Array<TreeNodeInterface>,
@@ -63,6 +62,16 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         )
     };
 
+    renderContextMenu = () => {
+        return (
+            <Menu>
+                <Menu.Item key="1">1st menu item</Menu.Item>
+                <Menu.Item key="2">2nd menu item</Menu.Item>
+                <Menu.Item key="3">3rd menu item</Menu.Item>
+            </Menu>
+        )
+    };
+
     handleSwitchChange = (checked: boolean) => {
         const {treeData} = this.props;
         let expandedKeys: Array<string>;
@@ -72,6 +81,11 @@ class SchemaTreeContainer extends React.Component<Props, object> {
             expandedKeys = ['root'];
         }
         this.setState({expandedKeys});
+    };
+
+    handleTreeNodeRightClick = (options: AntTreeNodeMouseEvent) => {
+        const {event, node} = options;
+        console.log(event, node);
     };
 
     render() {
@@ -84,16 +98,18 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                     checkedChildren={"Expanded All"}
                     unCheckedChildren={"Collapsed"}
                 />
-                <br />
+                <br/>
                 <Tree
                     defaultExpandedKeys={expandedKeys}
                     // expandedKeys={expandedKeys}
+                    onRightClick={this.handleTreeNodeRightClick}
                 >
                     <TreeNode title={modelName} key={'root'}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
                     </TreeNode>
                 </Tree>
             </div>
+
         )
     }
 }
