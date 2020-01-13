@@ -1,4 +1,4 @@
-//
+// src/containers/schemaTree/SchemaTreeContainer.tsx
 
 import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
