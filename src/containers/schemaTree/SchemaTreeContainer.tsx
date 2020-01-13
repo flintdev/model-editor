@@ -22,12 +22,18 @@ export interface Props extends WithStyles<typeof styles> {
     treeData: Array<TreeNodeInterface>,
     nodeSelected: object | null,
     setTreeData?: (treeData: Array<TreeNodeInterface>) => void,
+    selectNode?: (node: TreeNodeInterface) => void,
+}
+
+interface TreeNodeMap {
+    [key: string]: TreeNodeInterface
 }
 
 class SchemaTreeContainer extends React.Component<Props, object> {
     state = {
         expandedKeys: ['root']
     };
+    treeNodeMap: TreeNodeMap = {};
 
     componentDidMount(): void {
         const {editorData} = this.props;
@@ -37,12 +43,37 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         }
     }
 
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<object>, snapshot?: any): void {
+        const {treeData} = this.props;
+        if (prevProps.treeData !== treeData) {
+            this.treeNodeMap = this.getTreeNodeMap(treeData);
+        }
+    }
+
     recurToGetNodeIds = (nodeIds: Array<string>, node: TreeNodeInterface) => {
         const {id, children} = node;
         nodeIds.push(id);
         if (!!children) {
             children.forEach(node => this.recurToGetNodeIds(nodeIds, node));
         }
+    };
+
+    recurToGetTreeNodeMap = (treeNodeMap: TreeNodeMap, node: TreeNodeInterface) => {
+        const {id, children} = node;
+        if (!treeNodeMap.hasOwnProperty(id)) {
+            treeNodeMap[id] = node;
+        }
+        if (!!children) {
+            children.forEach(node => this.recurToGetTreeNodeMap(treeNodeMap, node));
+        }
+    };
+
+    getTreeNodeMap = (treeData: TreeNodeInterface[]) => {
+        let treeNodeMap: TreeNodeMap = {};
+        treeData.forEach(node => {
+            this.recurToGetTreeNodeMap(treeNodeMap, node);
+        });
+        return treeNodeMap;
     };
 
     getAllNodeIds = (treeData: Array<TreeNodeInterface>) => {
@@ -88,8 +119,20 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         console.log(event, node);
     };
 
+    handleTreeNodeSelect = (selectedKeys: string[]) => {
+        console.log(selectedKeys);
+        if (selectedKeys.length > 0) {
+            const nodeId = selectedKeys[0];
+            const treeNodeSelected: TreeNodeInterface = this.treeNodeMap[nodeId];
+            this.props.selectNode(treeNodeSelected);
+        } else {
+            this.props.selectNode(null);
+        }
+    };
+
     render() {
         const {classes, modelName, treeData, nodeSelected} = this.props;
+        console.log('node selected', nodeSelected);
         const {expandedKeys} = this.state;
         return (
             <div className={classes.root}>
@@ -103,8 +146,9 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                     defaultExpandedKeys={expandedKeys}
                     // expandedKeys={expandedKeys}
                     onRightClick={this.handleTreeNodeRightClick}
+                    onSelect={this.handleTreeNodeSelect}
                 >
-                    <TreeNode title={modelName} key={'root'}>
+                    <TreeNode title={modelName} key={'root'} selectable={false}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
                     </TreeNode>
                 </Tree>
@@ -121,6 +165,7 @@ const mapStateToProps = (state: StoreState) => {
 const mapDispatchToProps = (dispatch: Dispatch<actions.SchemaTreeAction>) => {
     return {
         setTreeData: (treeData: Array<TreeNodeInterface>) => dispatch(actions.setTreeData(treeData)),
+        selectNode: (node: TreeNodeInterface) => dispatch(actions.selectNode(node)),
     }
 };
 

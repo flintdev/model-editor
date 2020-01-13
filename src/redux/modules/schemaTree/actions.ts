@@ -5,10 +5,10 @@ import {TreeNode} from "../../../interface";
 
 export interface SelectNode {
     type: typeof types.SELECT_NODE,
-    node: object,
+    node: TreeNode,
 }
 
-export function selectNode(node: object): SelectNode {
+export function selectNode(node: TreeNode): SelectNode {
     return { type: types.SELECT_NODE, node }
 }
 

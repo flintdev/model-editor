@@ -4,7 +4,7 @@ import {TreeNode} from "../interface";
 
 export interface StoreState {
     schemaTree: {
-        nodeSelected: object | null,
+        nodeSelected: TreeNode | null,
         treeData: Array<TreeNode>,
     }
 }
