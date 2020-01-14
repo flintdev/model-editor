@@ -34,13 +34,13 @@ class ModelEditor extends React.Component<Props, object> {
             <Provider store={store}>
                 <div className={classes.root}>
                     <Row>
-                        <Col span={18}>
+                        <Col span={16}>
                             <SchemaTreeContainer
                                 modelName={modelName}
                                 editorData={editorData}
                             />
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FieldPanelContainer/>
                         </Col>
                     </Row>

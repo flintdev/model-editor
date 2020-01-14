@@ -1,3 +1,5 @@
+// src/redux/modules/fieldPanel/actions.ts
+
 import * as types from './types';
 
 export interface AddChildField {

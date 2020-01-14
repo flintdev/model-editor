@@ -23,10 +23,31 @@ interface NodeParamsBase {
 }
 
 export interface StringNodeParams extends NodeParamsBase {
+    format?: string,
     minLength?: number,
     maxLength?: number,
     pattern?: string,
     options?: Array<string>,
+}
+
+export interface NumberNodeParams extends NodeParamsBase {
+
+}
+
+export interface IntegerNodeParams extends NodeParamsBase {
+
+}
+
+export interface BooleanNodeParams extends NodeParamsBase {
+
+}
+
+export interface ArrayNodeParams extends NodeParamsBase {
+
+}
+
+export interface ObjectNodeParams extends NodeParamsBase {
+
 }
 
 export type NodeParams = StringNodeParams;
