@@ -11,6 +11,11 @@ export const editorDataSample1: EditorData = {
                     id: 'root-creator-name',
                     name: 'name',
                     type: 'string',
+                },
+                {
+                    id: 'root-creator-password',
+                    name: 'password',
+                    type: 'string',
                 }
             ]
         },
@@ -28,7 +33,7 @@ export const editorDataSample1: EditorData = {
                     id: 'root-records-items',
                     name: 'items',
                     type: 'string',
-                }
+                },
             ]
         }
     ]
