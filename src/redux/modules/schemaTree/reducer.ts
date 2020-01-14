@@ -14,7 +14,11 @@ export function reducer(state: object, action: SchemaTreeAction) {
             return update(state, {
                 treeData: {$set: action.treeData}
             });
+        case types.REMOVE_NODE:
 
+            return update(state, {
+
+            });
         default:
             return state;
     }

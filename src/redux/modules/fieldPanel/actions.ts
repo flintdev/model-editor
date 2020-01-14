@@ -1,13 +1,14 @@
 // src/redux/modules/fieldPanel/actions.ts
 
 import * as types from './types';
+import {TreeNode} from "../../../interface";
 
-export interface AddChildField {
-    type: typeof types.ADD_CHILD_FIELD,
+export interface AddSubfield {
+    type: typeof types.ADD_SUBFIELD,
 }
 
-export function addChildField(): AddChildField {
-    return { type: types.ADD_CHILD_FIELD }
+export function addSubfield(): AddSubfield {
+    return { type: types.ADD_SUBFIELD }
 }
 
-export type FieldPanelAction = AddChildField;
+export type FieldPanelAction = AddSubfield;
