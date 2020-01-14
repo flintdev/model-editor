@@ -6,8 +6,6 @@ import {Provider} from 'react-redux';
 import {store} from "src/redux/store";
 import {ModelEditorProps} from "../interface";
 import SchemaTreeContainer from "../containers/schemaTree/SchemaTreeContainer";
-import FieldPanelContainer from "../containers/fieldPanel/FieldPanelContainer";
-import { Row, Col } from 'antd';
 
 const styles = createStyles({
     root: {
@@ -33,18 +31,10 @@ class ModelEditor extends React.Component<Props, object> {
         return (
             <Provider store={store}>
                 <div className={classes.root}>
-                    <Row>
-                        <Col span={16}>
-                            <SchemaTreeContainer
-                                modelName={modelName}
-                                editorData={editorData}
-                            />
-                        </Col>
-                        <Col span={8}>
-                            <FieldPanelContainer/>
-                        </Col>
-                    </Row>
-
+                    <SchemaTreeContainer
+                        modelName={modelName}
+                        editorData={editorData}
+                    />
                 </div>
             </Provider>
         )

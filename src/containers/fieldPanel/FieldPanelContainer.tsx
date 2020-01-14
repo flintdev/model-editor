@@ -6,12 +6,14 @@ import { connect } from 'react-redux';
 import { Dispatch } from "redux";
 import { StoreState } from "src/redux/state";
 import * as actions from "src/redux/modules/fieldPanel/actions";
-import { Card } from 'antd';
 
 const styles = createStyles({
     root: {
 
     },
+    container: {
+        width: 300,
+    }
 });
 
 export interface Props extends WithStyles<typeof styles>, StoreState {
@@ -33,7 +35,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
         return (
             <div className={classes.root}>
                 {!!nodeSelected &&
-                <div>
+                <div className={classes.container}>
                     {nodeSelected.name}
                 </div>
                 }
