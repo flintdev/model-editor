@@ -33,9 +33,9 @@ class FieldPanelContainer extends React.Component<Props, object> {
         return (
             <div className={classes.root}>
                 {!!nodeSelected &&
-                <Card title={nodeSelected.name}>
-
-                </Card>
+                <div>
+                    {nodeSelected.name}
+                </div>
                 }
             </div>
         )

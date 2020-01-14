@@ -6,9 +6,10 @@ import {connect} from 'react-redux';
 import {Dispatch} from "redux";
 import {StoreState} from "src/redux/state";
 import * as actions from "src/redux/modules/schemaTree/actions";
-import {Tree, Switch, Menu, Dropdown} from 'antd';
+import {Tree, Switch, Menu, Dropdown, Popover, Button} from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
 import {AntTreeNodeMouseEvent} from "antd/lib/tree";
+import FieldPanelContainer from "../fieldPanel/FieldPanelContainer";
 
 const {TreeNode} = Tree;
 
@@ -87,7 +88,23 @@ class SchemaTreeContainer extends React.Component<Props, object> {
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
         const {id, name, type, children} = node;
         return (
-            <TreeNode title={name} key={id}>
+            <TreeNode
+                title={
+                    <span>
+                        <Popover
+                            title={name}
+                            placement={"rightTop"}
+                            arrowPointAtCenter={true}
+                            content={<FieldPanelContainer/>}
+                            trigger={"click"}
+                        >
+                            <Button size={"small"} onClick={this.handleNodeButtonClick(node)}>{name}</Button>
+                        </Popover>
+                    </span>
+                }
+                key={id}
+                selectable={false}
+            >
                 {!!children && children.map(node => this.recurToRenderTreeNode(node))}
             </TreeNode>
         )
@@ -133,6 +150,10 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         }
     };
 
+    handleNodeButtonClick = (node: TreeNodeInterface) => () => {
+        this.props.selectNode(node);
+    };
+
     render() {
         const {classes, modelName, treeData, nodeSelected} = this.props;
         const {expandedKeys} = this.state;
@@ -147,8 +168,9 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                 <Tree
                     defaultExpandedKeys={expandedKeys}
                     // expandedKeys={expandedKeys}
-                    onRightClick={this.handleTreeNodeRightClick}
-                    onSelect={this.handleTreeNodeSelect}
+                    // onRightClick={this.handleTreeNodeRightClick}
+                    // onSelect={this.handleTreeNodeSelect}
+                    selectable={false}
                 >
                     <TreeNode title={modelName} key={'root'}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
