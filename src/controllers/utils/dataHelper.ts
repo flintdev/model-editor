@@ -2,23 +2,26 @@
 
 import {TreeNode} from "../../interface";
 
+type NodePath = Array<string | number>;
+
 export class DataHelper {
 
-    findPathOfTreeNode = (treeData: TreeNode[], targetNode: TreeNode) => {
+    findPathOfTreeNode = (treeData: TreeNode[], nodeId: string) => {
         let path: Array<string | number> = [];
-        return this._recurToGetPath(treeData, path, targetNode);
+        return this.recurToGetPath(treeData, path, nodeId);
     };
 
-    _recurToGetPath = (nodes: TreeNode[], path: Array<string | number>, targetNode: TreeNode) => {
+    private recurToGetPath = (nodes: TreeNode[], path: NodePath, nodeId: string): NodePath => {
         for (let i=0; i<nodes.length; i++) {
-            const newPath = [...path, i];
             const node = nodes[i];
-            if (node.id === targetNode.id) {
-                return newPath;
+            if (node.id === nodeId) {
+                return [...path, i];
             } else if (!!node.children && node.children.length > 0) {
-                this._recurToGetPath(node.children, newPath, targetNode);
+                const newPath = [...path, i, 'children'];
+                const result = this.recurToGetPath(node.children, newPath, nodeId);
+                if (!!result) return result;
             }
         }
-        return path;
-    }
+    };
+
 }
