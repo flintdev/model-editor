@@ -9,7 +9,6 @@ out
 gen
 
 docs
-src
 node_modules
 .gitignore
 jest.config.js

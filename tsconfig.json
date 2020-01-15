@@ -4,11 +4,12 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es5",
+    "allowJs": true,
     "resolveJsonModule": true,
+    "declaration": true,
     "jsx": "react",
     "baseUrl": ".",
-    "rootDir": "src",
     "paths": {
       "src": ["src/*"]
     }
@@ -19,8 +20,6 @@
     "src/**/*.spec.*"
   ],
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts"
+    "src/**/*"
   ]
 }
