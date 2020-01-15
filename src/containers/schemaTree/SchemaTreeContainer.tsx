@@ -10,6 +10,7 @@ import {Tree, Switch, Menu, Dropdown, Popover, Button} from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
 import {AntTreeNodeMouseEvent} from "antd/lib/tree";
 import FieldPanelContainer from "../fieldPanel/FieldPanelContainer";
+import NodeTypeTag from "src/components/NodeTypeTag";
 
 const {TreeNode} = Tree;
 
@@ -99,7 +100,14 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                             content={<FieldPanelContainer/>}
                             trigger={"click"}
                         >
-                            <Button size={"small"} onClick={this.handleNodeButtonClick(node)}>{name}</Button>
+                            <Button
+                                size={"small"}
+                                type={"link"}
+                                onClick={this.handleNodeButtonClick(node)}
+                            >
+                                {name}&nbsp;&nbsp;
+                                <NodeTypeTag nodeType={type}/>
+                            </Button>
                         </Popover>
                     </span>
                 }

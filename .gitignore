@@ -81,3 +81,4 @@ package-lock.json
 node_modules
 webpack-stats.json
 dist/
+!/src/components/NodeTypeTag/NodeTypeTag.tsx

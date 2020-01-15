@@ -1,22 +1,6 @@
-
-export enum NodeTypeOption {
-    string = 'string',
-    number = 'number',
-    integer = 'integer',
-    boolean = 'boolean',
-    array = 'array',
-    object = 'object',
-}
+// src/interface.d.ts
 
 export type NodeType = "root" | "string" | "number" | "integer" | "boolean" | "array" | "object";
-
-export enum StringFormat {
-    date = 'date',
-    datetime = 'date-time',
-    password = 'password',
-    byte = 'byte',
-    binary = 'binary'
-}
 
 interface NodeParamsBase {
     required: boolean
