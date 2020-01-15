@@ -4,7 +4,7 @@ import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
 import {connect} from 'react-redux';
 import {Dispatch} from "redux";
-import {StoreState} from "src/redux/state";
+import {SchemaTreeState, StoreState} from "src/redux/state";
 import * as actions from "src/redux/modules/schemaTree/actions";
 import {Tree, Switch, Menu, Dropdown, Popover, Button} from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
@@ -15,13 +15,14 @@ const {TreeNode} = Tree;
 
 const styles = createStyles({
     root: {},
+    hidden: {
+        display: 'none'
+    }
 });
 
-export interface Props extends WithStyles<typeof styles> {
+export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
     modelName: string,
     editorData: EditorData,
-    treeData: Array<TreeNodeInterface>,
-    nodeSelected: object | null,
     setTreeData?: (treeData: Array<TreeNodeInterface>) => void,
     selectNode?: (node: TreeNodeInterface) => void,
 }
@@ -155,7 +156,7 @@ class SchemaTreeContainer extends React.Component<Props, object> {
     };
 
     render() {
-        const {classes, modelName, treeData, nodeSelected} = this.props;
+        const {classes, modelName, treeData, nodeSelected, _mark} = this.props;
         const {expandedKeys} = this.state;
         return (
             <div className={classes.root}>
@@ -176,6 +177,8 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
                     </TreeNode>
                 </Tree>
+
+                <div className={classes.hidden}>{_mark}</div>
             </div>
 
         )

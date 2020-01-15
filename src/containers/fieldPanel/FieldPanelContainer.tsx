@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from "redux";
 import { StoreState } from "src/redux/state";
 import * as actions from "src/redux/modules/fieldPanel/actions";
+import ActionBox from "./ActionBox";
 
 const styles = createStyles({
     root: {
@@ -36,6 +37,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
             <div className={classes.root}>
                 {!!nodeSelected &&
                 <div className={classes.container}>
+                    <ActionBox/>
                     {nodeSelected.name}
                 </div>
                 }

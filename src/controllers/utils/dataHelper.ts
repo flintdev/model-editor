@@ -12,9 +12,9 @@ export class DataHelper {
         return this.recurToGetPath(treeData, path, nodeId);
     };
 
-    removeTreeNodeById = (treeData: TreeNode[], nodeId: string) => {
+    removeTreeNodeById = (treeData: TreeNode[], nodeId: string): TreeNode[] => {
         let path: NodePath = this.findPathOfTreeNode(treeData, nodeId);
-        if (!path) return false;
+        if (!path) return treeData;
         else if (path.length === 1) {
             treeData.splice(path[0] as number, 1);
             return treeData;

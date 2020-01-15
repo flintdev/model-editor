@@ -23,11 +23,10 @@ export function setTreeData(treeData: Array<TreeNode>): SetTreeData {
 
 export interface RemoveNode {
     type: typeof types.REMOVE_NODE,
-    node: TreeNode,
 }
 
-export function removeNode(node: TreeNode): RemoveNode {
-    return { type: types.REMOVE_NODE, node }
+export function removeNode(): RemoveNode {
+    return { type: types.REMOVE_NODE }
 }
 
 export type SchemaTreeAction = SelectNode | SetTreeData | RemoveNode;
