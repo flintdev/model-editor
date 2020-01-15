@@ -1,5 +1,5 @@
 import {DataHelper} from "../dataHelper";
-import {editorDataSample1} from "../../../../example/data/editorDataSample1";
+import {editorDataSample1} from "./editorDataSample1";
 import {TreeNode} from "../../../interface";
 
 

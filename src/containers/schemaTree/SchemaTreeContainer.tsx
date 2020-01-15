@@ -4,13 +4,13 @@ import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
 import {connect} from 'react-redux';
 import {Dispatch} from "redux";
-import {SchemaTreeState, StoreState} from "src/redux/state";
-import * as actions from "src/redux/modules/schemaTree/actions";
+import {SchemaTreeState, StoreState} from "../../redux/state";
+import * as actions from "../../redux/modules/schemaTree/actions";
 import {Tree, Switch, Menu, Dropdown, Popover, Button} from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
 import {AntTreeNodeMouseEvent} from "antd/lib/tree";
 import FieldPanelContainer from "../fieldPanel/FieldPanelContainer";
-import NodeTypeTag from "src/components/NodeTypeTag";
+import NodeTypeTag from "../../components/NodeTypeTag";
 
 const {TreeNode} = Tree;
 

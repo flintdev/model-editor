@@ -4,8 +4,8 @@ import * as React from 'react';
 import { withStyles, WithStyles, createStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
-import { StoreState } from "src/redux/state";
-import * as actions from "src/redux/modules/fieldPanel/actions";
+import { StoreState } from "../../../redux/state";
+import * as actions from "../../../redux/modules/fieldPanel/actions";
 
 const styles = createStyles({
     root: {

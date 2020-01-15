@@ -1,13 +1,13 @@
 {
-  "name": "model-editor",
-  "version": "0.0.1",
+  "name": "@flintdev/model-editor",
+  "version": "0.0.2",
   "description": "npm package to edit data model of application as flint component",
   "main": "dist/index.js",
   "scripts": {
     "test": "test",
     "start": "webpack-dev-server",
     "build-example": "webpack --config webpack.config.js -w",
-    "build-dist": "rimraf dist && tsc --outDir dist"
+    "build-dist": "rimraf dist && tsc --outDir dist/"
   },
   "repository": {
     "type": "git",
@@ -56,5 +56,8 @@
     "lodash": "^4.17.15 || ^4.0.0",
     "immutability-helper": "^3.0.1 || ^3.0.0",
     "redux-thunk": "^2.3.0 || ^2.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }

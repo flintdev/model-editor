@@ -10,3 +10,5 @@ export const store = createStore(
     initState,
     applyMiddleware(thunk)
 );
+
+

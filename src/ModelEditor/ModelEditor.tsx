@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
 import {Provider} from 'react-redux';
-import {store} from "src/redux/store";
+import {store} from "../redux/store";
 import {ModelEditorProps} from "../interface";
 import SchemaTreeContainer from "../containers/schemaTree/SchemaTreeContainer";
 

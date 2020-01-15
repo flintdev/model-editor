@@ -6,8 +6,8 @@ import { withStyles, WithStyles, createStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
 import { StoreState } from "src/redux/state";
-import * as actions from "src/redux/modules/fieldPanel/actions";
-import * as schemaTreeActions from 'src/redux/modules/schemaTree/actions';
+import * as actions from "../../../redux/modules/fieldPanel/actions";
+import * as schemaTreeActions from '../../../redux/modules/schemaTree/actions';
 import {TreeNode} from "../../../interface";
 import {Button} from "antd";
 
