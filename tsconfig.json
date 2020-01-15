@@ -4,20 +4,20 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2017",
     "allowJs": true,
     "resolveJsonModule": true,
     "declaration": true,
     "jsx": "react",
     "baseUrl": ".",
+    "rootDir": "src",
     "paths": {
       "src": ["src/*"]
     }
   },
   "exclude": [
     "node_modules",
-    "dist",
-    "src/**/*.spec.*"
+    "dist"
   ],
   "include": [
     "src/**/*"
