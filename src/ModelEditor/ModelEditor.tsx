@@ -1,7 +1,7 @@
 // src/ModelEditor/ModelEditor.tsx
 
 import * as React from 'react';
-import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
+import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
 import {Provider} from 'react-redux';
 import {store} from "../redux/store";
 import {ModelEditorProps} from "../interface";

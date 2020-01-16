@@ -1,18 +1,18 @@
 // src/containers/schemaTree/SchemaTreeContainer.tsx
 
 import * as React from 'react';
-import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
+import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 import {Dispatch} from "redux";
 import {SchemaTreeState, StoreState} from "../../redux/state";
 import * as actions from "../../redux/modules/schemaTree/actions";
-import {Tree, Switch, Menu, Dropdown, Popover, Button} from 'antd';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
-import {AntTreeNodeMouseEvent} from "antd/lib/tree";
 import FieldPanelContainer from "../fieldPanel/FieldPanelContainer";
 import NodeTypeTag from "../../components/NodeTypeTag";
-
-const {TreeNode} = Tree;
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
 
 const styles = createStyles({
     root: {},
@@ -89,43 +89,25 @@ class SchemaTreeContainer extends React.Component<Props, object> {
 
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
         const {id, name, type, children} = node;
-        return (
-            <TreeNode
-                title={
-                    <span>
-                        <Popover
-                            title={name}
-                            placement={"rightTop"}
-                            arrowPointAtCenter={true}
-                            content={<FieldPanelContainer/>}
-                            trigger={"click"}
-                        >
-                            <Button
-                                size={"small"}
-                                type={"link"}
-                                onClick={this.handleNodeButtonClick(node)}
-                            >
-                                {name}&nbsp;&nbsp;
-                                <NodeTypeTag nodeType={type}/>
-                            </Button>
-                        </Popover>
-                    </span>
-                }
+        const treeItem = !!children && children.length > 0 ? (
+            <TreeItem
+                nodeId={id}
+                label={name}
                 key={id}
-                selectable={false}
             >
                 {!!children && children.map(node => this.recurToRenderTreeNode(node))}
-            </TreeNode>
-        )
-    };
-
-    renderContextMenu = () => {
+            </TreeItem>
+        ) : (
+            <TreeItem
+                nodeId={id}
+                label={name}
+                key={id}
+            />
+        );
         return (
-            <Menu>
-                <Menu.Item key="1">1st menu item</Menu.Item>
-                <Menu.Item key="2">2nd menu item</Menu.Item>
-                <Menu.Item key="3">3rd menu item</Menu.Item>
-            </Menu>
+            <React.Fragment key={id}>
+                {treeItem}
+            </React.Fragment>
         )
     };
 
@@ -138,10 +120,6 @@ class SchemaTreeContainer extends React.Component<Props, object> {
             expandedKeys = ['root'];
         }
         this.setState({expandedKeys});
-    };
-
-    handleTreeNodeRightClick = (options: AntTreeNodeMouseEvent) => {
-        const {event, node} = options;
     };
 
     handleTreeNodeSelect = (selectedKeys: string[]) => {
@@ -165,26 +143,18 @@ class SchemaTreeContainer extends React.Component<Props, object> {
 
     render() {
         const {classes, modelName, treeData, nodeSelected, _mark} = this.props;
-        const {expandedKeys} = this.state;
         return (
             <div className={classes.root}>
-                <Switch
-                    onChange={this.handleSwitchChange}
-                    checkedChildren={"Expanded All"}
-                    unCheckedChildren={"Collapsed"}
-                />
-                <br/>
-                <Tree
-                    defaultExpandedKeys={expandedKeys}
-                    // expandedKeys={expandedKeys}
-                    // onRightClick={this.handleTreeNodeRightClick}
-                    // onSelect={this.handleTreeNodeSelect}
-                    selectable={false}
+                <TreeView
+                    className={classes.root}
+                    defaultCollapseIcon={<ExpandMoreIcon/>}
+                    defaultExpandIcon={<ChevronRightIcon/>}
+                    // expanded={["root"]}
                 >
-                    <TreeNode title={modelName} key={'root'}>
+                    <TreeItem label={modelName} key={'root'} nodeId={'root'}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
-                    </TreeNode>
-                </Tree>
+                    </TreeItem>
+                </TreeView>
 
                 <div className={classes.hidden}>{_mark}</div>
             </div>

@@ -2,14 +2,13 @@
 // Actions: Add subfield node, add parallel field, remove field
 
 import * as React from 'react';
-import { withStyles, WithStyles, createStyles } from '@material-ui/styles';
+import { withStyles, WithStyles, createStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
-import { StoreState } from "src/redux/state";
+import { StoreState } from "../../../redux/state";
 import * as actions from "../../../redux/modules/fieldPanel/actions";
 import * as schemaTreeActions from '../../../redux/modules/schemaTree/actions';
-import {TreeNode} from "../../../interface";
-import {Button} from "antd";
+import Button from "@material-ui/core/Button";
 
 const styles = createStyles({
     root: {
@@ -42,7 +41,8 @@ class ActionBox extends React.Component<Props, object> {
     renderRemoveFieldButton = () => {
         return (
             <Button
-                block type={"danger"} ghost
+                variant={"outlined"}
+                color={"secondary"}
                 onClick={this.handleRemoveNodeClick}
             >
                 REMOVE FIELD

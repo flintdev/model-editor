@@ -1,12 +1,12 @@
 // example/ExampleContainer.tsx
 
 import * as React from 'react';
-import {withStyles, WithStyles, createStyles} from '@material-ui/styles';
-import { Tabs } from 'antd';
+import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
+// @ts-ignore
 import {editorDataSample1} from "./data/editorDataSample1";
 import ModelEditor from "../src/ModelEditor";
-
-const { TabPane } = Tabs;
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 const styles = createStyles({
     root: {
@@ -31,17 +31,20 @@ class ExampleContainer extends React.Component<Props, object> {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <Tabs defaultActiveKey="2">
-                    <TabPane tab="New Model Editor" key="1">
-                        Content of Tab Pane 1
-                    </TabPane>
-                    <TabPane tab="Update Existing Editor" key="2">
-                        <ModelEditor
-                            modelName={"ExampleModel"}
-                            editorData={editorDataSample1}
-                        />
-                    </TabPane>
+                <Tabs
+                    value={1}
+                    indicatorColor={"primary"}
+                    textColor={"primary"}
+                >
+                    <Tab label="New Model Editor"/>
+                    <Tab label="Update Existing Editor"/>
                 </Tabs>
+                <div>
+                    <ModelEditor
+                        modelName={"ExampleModel"}
+                        editorData={editorDataSample1}
+                    />
+                </div>
             </div>
         )
     }
