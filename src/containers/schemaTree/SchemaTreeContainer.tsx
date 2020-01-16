@@ -89,21 +89,16 @@ class SchemaTreeContainer extends React.Component<Props, object> {
 
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
         const {id, name, type, children} = node;
+        const label = (<span>{name}&nbsp;&nbsp;<NodeTypeTag nodeType={type}/></span>);
+        const props = {nodeId: id, label, key: id};
         const treeItem = !!children && children.length > 0 ? (
-            <TreeItem
-                nodeId={id}
-                label={name}
-                key={id}
-            >
+            <TreeItem {...props}>
                 {!!children && children.map(node => this.recurToRenderTreeNode(node))}
             </TreeItem>
         ) : (
-            <TreeItem
-                nodeId={id}
-                label={name}
-                key={id}
-            />
-        );
+            <TreeItem {...props}/>
+
+            );
         return (
             <React.Fragment key={id}>
                 {treeItem}
@@ -149,7 +144,7 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                     className={classes.root}
                     defaultCollapseIcon={<ExpandMoreIcon/>}
                     defaultExpandIcon={<ChevronRightIcon/>}
-                    // expanded={["root"]}
+                    defaultExpanded={['root']}
                 >
                     <TreeItem label={modelName} key={'root'} nodeId={'root'}>
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
