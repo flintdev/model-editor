@@ -28,7 +28,7 @@ const styles = createStyles({
 
 export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
     modelName: string,
-    editorData: EditorData,
+    editorData: EditorData | undefined,
     setTreeData: (treeData: Array<TreeNodeInterface>) => void,
     selectNode: (node: TreeNodeInterface | null) => void,
 }

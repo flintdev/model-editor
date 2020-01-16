@@ -17,7 +17,7 @@ const styles = createStyles({
 });
 
 export interface Props extends WithStyles<typeof styles>, StoreState{
-    removeNode?: () => void,
+    removeNode: () => void,
 }
 
 class ActionBox extends React.Component<Props, object> {

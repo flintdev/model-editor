@@ -17,6 +17,7 @@ export function reducer(state: SchemaTreeState, action: SchemaTreeAction) {
                 treeData: {$set: action.treeData}
             });
         case types.REMOVE_NODE:
+            if (!state.nodeSelected) return state;
             const newTreeData = new DataHelper().removeTreeNodeById(state.treeData, state.nodeSelected.id);
             return update(state, {
                 treeData: {$set: newTreeData},

@@ -7,7 +7,7 @@ type NodePath = Array<string | number>;
 
 export class DataHelper {
 
-    findPathOfTreeNode = (treeData: TreeNode[], nodeId: string) => {
+    findPathOfTreeNode = (treeData: TreeNode[], nodeId: string): NodePath => {
         let path: Array<string | number> = [];
         return this.recurToGetPath(treeData, path, nodeId);
     };
@@ -37,6 +37,7 @@ export class DataHelper {
                 if (!!result) return result;
             }
         }
+        return [];
     };
 
 }
