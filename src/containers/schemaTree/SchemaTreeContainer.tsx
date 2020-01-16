@@ -13,28 +13,39 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = createStyles({
     root: {},
     hidden: {
         display: 'none'
-    }
+    },
+    treeItemContent: {
+        backgroundColor: 'white',
+    },
 });
 
 export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
     modelName: string,
     editorData: EditorData,
-    setTreeData?: (treeData: Array<TreeNodeInterface>) => void,
-    selectNode?: (node: TreeNodeInterface) => void,
+    setTreeData: (treeData: Array<TreeNodeInterface>) => void,
+    selectNode: (node: TreeNodeInterface | null) => void,
 }
 
 interface TreeNodeMap {
     [key: string]: TreeNodeInterface
 }
 
-class SchemaTreeContainer extends React.Component<Props, object> {
-    state = {
-        expandedKeys: ['root']
+interface State {
+    expandedKeys: string[],
+    fieldPanelAnchor: object | undefined,
+}
+
+class SchemaTreeContainer extends React.Component<Props, State> {
+    state: State = {
+        expandedKeys: ['root'],
+        fieldPanelAnchor: undefined,
     };
     treeNodeMap: TreeNodeMap = {};
 
@@ -89,7 +100,17 @@ class SchemaTreeContainer extends React.Component<Props, object> {
 
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
         const {id, name, type, children} = node;
-        const label = (<span>{name}&nbsp;&nbsp;<NodeTypeTag nodeType={type}/></span>);
+        const label = (
+            <span>
+                {name}&nbsp;&nbsp;
+                <NodeTypeTag nodeType={type}/>&nbsp;&nbsp;
+                <IconButton
+                    size={"small"}
+                    onClick={this.handleNodeEditButtonClick(node)}
+                >
+                    <EditIcon fontSize={"inherit"}/>
+                </IconButton>&nbsp;&nbsp;
+            </span>);
         const props = {nodeId: id, label, key: id};
         const treeItem = !!children && children.length > 0 ? (
             <TreeItem {...props}>
@@ -98,12 +119,17 @@ class SchemaTreeContainer extends React.Component<Props, object> {
         ) : (
             <TreeItem {...props}/>
 
-            );
+        );
         return (
             <React.Fragment key={id}>
                 {treeItem}
             </React.Fragment>
         )
+    };
+
+    handleNodeEditButtonClick = (node: TreeNodeInterface) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        console.log(node);
     };
 
     handleSwitchChange = (checked: boolean) => {
@@ -146,7 +172,11 @@ class SchemaTreeContainer extends React.Component<Props, object> {
                     defaultExpandIcon={<ChevronRightIcon/>}
                     defaultExpanded={['root']}
                 >
-                    <TreeItem label={modelName} key={'root'} nodeId={'root'}>
+                    <TreeItem
+                        label={modelName}
+                        key={'root'}
+                        nodeId={'root'}
+                    >
                         {treeData.map(node => this.recurToRenderTreeNode(node))}
                     </TreeItem>
                 </TreeView>
