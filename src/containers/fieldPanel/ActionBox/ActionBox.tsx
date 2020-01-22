@@ -10,15 +10,17 @@ import * as actions from "../../../redux/modules/fieldPanel/actions";
 import * as schemaTreeActions from '../../../redux/modules/schemaTree/actions';
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Chip from "@material-ui/core/Chip";
+import Divider from "@material-ui/core/Divider";
 
 const styles = createStyles({
     root: {
-        
+        marginBottom: 10
     },
     table: {
         width: '100%',
+        marginBottom: 5,
     },
     textRight: {
         textAlign: 'right'
@@ -86,12 +88,13 @@ class ActionBox extends React.Component<Props, object> {
                                 color={"secondary"}
                                 onClick={this.handleRemoveNodeClick}
                             >
-                                <DeleteIcon/>
+                                <DeleteOutlineIcon/>
                             </IconButton>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <Divider/>
             </div>
         )
     }

@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { Dispatch } from "redux";
 import { StoreState } from "../../../redux/state";
 import * as actions from "../../../redux/modules/fieldPanel/actions";
+import {ParamsDef} from "./definition";
+import AutoForm, {ParamValues} from "../../../components/AutoForm";
 
 const styles = createStyles({
     root: {
@@ -26,11 +28,15 @@ class StringFieldPanel extends React.Component<Props, object> {
 
     }
 
+    handleParamValuesChange = (params: ParamValues) => {
+        console.log(params);
+    };
+
     render() {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-
+                <AutoForm params={ParamsDef} onChange={this.handleParamValuesChange}/>
             </div>
         )
     }

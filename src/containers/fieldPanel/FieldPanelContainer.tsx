@@ -8,6 +8,7 @@ import {StoreState} from "../../redux/state";
 import * as actions from "../../redux/modules/fieldPanel/actions";
 import ActionBox from "./ActionBox";
 import Popover from "@material-ui/core/Popover";
+import StringFieldPanel from "./StringFieldPanel";
 
 const styles = createStyles({
     root: {},
@@ -34,6 +35,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
         const {classes, schemaTree, fieldPanel} = this.props;
         const {anchor} = fieldPanel;
         const {nodeSelected} = schemaTree;
+        const nodeType = !!nodeSelected? nodeSelected.type : null;
         return (
             <div className={classes.root}>
                 <Popover
@@ -54,6 +56,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
                         {!!nodeSelected &&
                         <div className={classes.container}>
                             <ActionBox/>
+                            {nodeType === 'string' && <StringFieldPanel/>}
                         </div>
                         }
                     </div>
