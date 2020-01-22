@@ -18,6 +18,7 @@ const styles = createStyles({
 
 export interface Props extends WithStyles<typeof styles>, StoreState{
     removeNode: () => void,
+    closeFieldPanel: () => void,
 }
 
 class ActionBox extends React.Component<Props, object> {
@@ -52,6 +53,7 @@ class ActionBox extends React.Component<Props, object> {
 
     handleRemoveNodeClick = () => {
         this.props.removeNode();
+        this.props.closeFieldPanel();
     };
 
     render() {
@@ -71,6 +73,7 @@ const mapStateToProps = (state: StoreState) => {
 const mapDispatchToProps = (dispatch: Dispatch<actions.FieldPanelAction | schemaTreeActions.SchemaTreeAction>) => {
     return {
         removeNode: () => dispatch(schemaTreeActions.removeNode()),
+        closeFieldPanel: () => dispatch(actions.closeFieldPanel()),
     }
 };
 

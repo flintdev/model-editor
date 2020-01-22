@@ -1,46 +1,64 @@
 // src/containers/fieldPanel/FieldPanelContainer.tsx
 
 import * as React from 'react';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-import { Dispatch } from "redux";
-import { StoreState } from "../../redux/state";
+import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
+import {Dispatch} from "redux";
+import {StoreState} from "../../redux/state";
 import * as actions from "../../redux/modules/fieldPanel/actions";
 import ActionBox from "./ActionBox";
+import Popover from "@material-ui/core/Popover";
 
 const styles = createStyles({
-    root: {
-
-    },
+    root: {},
     container: {
-        width: 300,
+        width: 200,
+    },
+    popoverContent: {
+        padding: 20,
     }
 });
 
 export interface Props extends WithStyles<typeof styles>, StoreState {
-
+    closeFieldPanel: () => void
 }
 
 class FieldPanelContainer extends React.Component<Props, object> {
-    state = {
-
-    };
+    state = {};
 
     componentDidMount(): void {
 
     }
 
     render() {
-        const {classes, schemaTree} = this.props;
+        const {classes, schemaTree, fieldPanel} = this.props;
+        const {anchor} = fieldPanel;
         const {nodeSelected} = schemaTree;
         return (
             <div className={classes.root}>
-                {!!nodeSelected &&
-                <div className={classes.container}>
-                    <ActionBox/>
-                    {nodeSelected.name}
-                </div>
-                }
+                <Popover
+                    open={Boolean(anchor)}
+                    anchorEl={anchor}
+                    onClose={this.props.closeFieldPanel}
+                    anchorOrigin={{
+                        vertical: 'center',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                >
+                    <div className={classes.popoverContent}>
+
+                        {!!nodeSelected &&
+                        <div className={classes.container}>
+                            <ActionBox/>
+                            {nodeSelected.name}
+                        </div>
+                        }
+                    </div>
+                </Popover>
             </div>
         )
     }
@@ -52,7 +70,7 @@ const mapStateToProps = (state: StoreState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<actions.FieldPanelAction>) => {
     return {
-
+        closeFieldPanel: () => dispatch(actions.closeFieldPanel()),
     }
 };
 

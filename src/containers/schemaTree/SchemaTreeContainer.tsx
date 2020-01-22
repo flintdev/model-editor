@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {Dispatch} from "redux";
 import {SchemaTreeState, StoreState} from "../../redux/state";
 import * as actions from "../../redux/modules/schemaTree/actions";
+import * as fieldPanelActions from '../../redux/modules/fieldPanel/actions';
 import {EditorData, TreeNode as TreeNodeInterface} from "../../interface";
 import FieldPanelContainer from "../fieldPanel/FieldPanelContainer";
 import NodeTypeTag from "../../components/NodeTypeTag";
@@ -15,7 +16,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const styles = createStyles({
     root: {},
@@ -29,7 +29,7 @@ const styles = createStyles({
         paddingLeft: 10,
         paddingRight: 10,
         color: 'dimgrey',
-    }
+    },
 });
 
 export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
@@ -37,6 +37,7 @@ export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
     editorData: EditorData | undefined,
     setTreeData: (treeData: Array<TreeNodeInterface>) => void,
     selectNode: (node: TreeNodeInterface | null) => void,
+    openFieldPanel: (anchor: Element) => void,
 }
 
 interface TreeNodeMap {
@@ -45,13 +46,11 @@ interface TreeNodeMap {
 
 interface State {
     expandedKeys: string[],
-    fieldPanelAnchor: object | undefined,
 }
 
 class SchemaTreeContainer extends React.Component<Props, State> {
     state: State = {
         expandedKeys: ['root'],
-        fieldPanelAnchor: undefined,
     };
     treeNodeMap: TreeNodeMap = {};
 
@@ -134,8 +133,10 @@ class SchemaTreeContainer extends React.Component<Props, State> {
         )
     };
 
-    handleNodeEditButtonClick = (node: TreeNodeInterface) => (event: React.MouseEvent) => {
+    handleNodeEditButtonClick = (node: TreeNodeInterface) => (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
+        this.props.selectNode(node);
+        this.props.openFieldPanel(event.currentTarget);
     };
 
     handleSwitchChange = (checked: boolean) => {
@@ -164,10 +165,6 @@ class SchemaTreeContainer extends React.Component<Props, State> {
         }
     };
 
-    handleNodeButtonClick = (node: TreeNodeInterface) => () => {
-        this.props.selectNode(node);
-    };
-
     render() {
         const {classes, modelName, treeData, nodeSelected, _mark} = this.props;
         return (
@@ -187,6 +184,8 @@ class SchemaTreeContainer extends React.Component<Props, State> {
                     </TreeItem>
                 </TreeView>
 
+                <FieldPanelContainer/>
+
                 <div className={classes.hidden}>{_mark}</div>
             </div>
 
@@ -198,10 +197,11 @@ const mapStateToProps = (state: StoreState) => {
     return state.schemaTree;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.SchemaTreeAction>) => {
+const mapDispatchToProps = (dispatch: Dispatch<actions.SchemaTreeAction | fieldPanelActions.FieldPanelAction>) => {
     return {
         setTreeData: (treeData: Array<TreeNodeInterface>) => dispatch(actions.setTreeData(treeData)),
         selectNode: (node: TreeNodeInterface) => dispatch(actions.selectNode(node)),
+        openFieldPanel: (anchor: Element) => dispatch(fieldPanelActions.openFieldPanel(anchor)),
     }
 };
 

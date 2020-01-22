@@ -8,9 +8,14 @@ export interface SchemaTreeState {
     treeData: TreeNode[],
 }
 
+export interface FieldPanelState {
+    anchor: Element | undefined,
+
+}
+
 export interface StoreState {
     schemaTree: SchemaTreeState,
-    fieldPanel: object,
+    fieldPanel: FieldPanelState,
 }
 
 export const initState: StoreState = {
@@ -20,6 +25,6 @@ export const initState: StoreState = {
         treeData: [],
     },
     fieldPanel: {
-
+        anchor: undefined,
     },
 };
