@@ -1,9 +1,9 @@
-// src/interface.d.ts
+// src/interface.ts
 
 export type NodeType = "root" | "string" | "number" | "integer" | "boolean" | "array" | "object";
 
 interface NodeParamsBase {
-    required: boolean
+    required?: boolean
 }
 
 export interface StringNodeParams extends NodeParamsBase {
@@ -34,7 +34,11 @@ export interface ObjectNodeParams extends NodeParamsBase {
 
 }
 
-export type NodeParams = StringNodeParams;
+export interface DefaultObject {
+    [key: string]: string|number|undefined
+}
+
+export type NodeParams = DefaultObject | undefined;
 
 export interface TreeNode {
     type: NodeType,

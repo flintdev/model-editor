@@ -7,7 +7,8 @@ import { Dispatch } from "redux";
 import { StoreState } from "../../../redux/state";
 import * as actions from "../../../redux/modules/fieldPanel/actions";
 import {ParamsDef} from "./definition";
-import AutoForm, {ParamValues} from "../../../components/AutoForm";
+import AutoForm from "../../../components/AutoForm";
+import {NodeParams} from "../../../interface";
 
 const styles = createStyles({
     root: {
@@ -16,7 +17,8 @@ const styles = createStyles({
 });
 
 export interface Props extends WithStyles<typeof styles>{
-    onChange: (paramValues: ParamValues) => void,
+    paramValues: NodeParams,
+    onChange: (paramValues: NodeParams) => void,
 }
 
 class StringFieldPanel extends React.Component<Props, object> {
@@ -29,10 +31,10 @@ class StringFieldPanel extends React.Component<Props, object> {
     }
 
     render() {
-        const {classes} = this.props;
+        const {classes, paramValues} = this.props;
         return (
             <div className={classes.root}>
-                <AutoForm params={ParamsDef} onChange={this.props.onChange}/>
+                <AutoForm params={ParamsDef} paramValues={paramValues} onChange={this.props.onChange}/>
             </div>
         )
     }

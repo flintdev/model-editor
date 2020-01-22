@@ -2,7 +2,7 @@
 
 import {TreeNode} from "../../interface";
 import * as _ from 'lodash';
-import {ParamValues} from "../../components/AutoForm";
+import {NodeParams} from "../../interface";
 
 type NodePath = Array<string|number>;
 
@@ -13,7 +13,7 @@ export class DataHelper {
         return this.recurToGetPath(treeData, path, nodeId);
     };
 
-    updateNodeParamsInTreeData = (treeData: TreeNode[], nodeId: string, paramValues: ParamValues): TreeNode[] => {
+    updateNodeParamsInTreeData = (treeData: TreeNode[], nodeId: string, paramValues: NodeParams): TreeNode[] => {
         let path: NodePath = this.findPathOfTreeNode(treeData, nodeId);
         if (!path || path.length === 0) return treeData;
         const paramsPath: Array<string|number> = [...path, 'params'];

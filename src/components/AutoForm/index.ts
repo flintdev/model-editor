@@ -1,1 +1,1 @@
-export { default, ParamValues } from './AutoForm';
+export { default } from './AutoForm';

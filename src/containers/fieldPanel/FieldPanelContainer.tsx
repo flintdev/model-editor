@@ -12,9 +12,8 @@ import Popover from "@material-ui/core/Popover";
 import StringFieldPanel from "./StringFieldPanel";
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import {ParamValues} from "../../components/AutoForm";
 import {DataHelper} from "../../controllers/utils/dataHelper";
-import {TreeNode} from "../../interface";
+import {NodeParams, TreeNode} from "../../interface";
 
 const styles = createStyles({
     root: {},
@@ -49,13 +48,11 @@ class FieldPanelContainer extends React.Component<Props, object> {
         const {nodeSelected, treeData} = schemaTree;
         if (!nodeSelected) return false;
         const newTreeData = new DataHelper().updateNodeParamsInTreeData(treeData, nodeSelected.id, paramValues);
-        console.log('new tree data', newTreeData);
         this.props.setTreeData(newTreeData);
         this.props.closeFieldPanel();
     };
 
-    handleParamValuesChange = (paramValues: ParamValues) => {
-        console.log(paramValues);
+    handleParamValuesChange = (paramValues: NodeParams) => {
         this.setState({paramValues});
     };
 
@@ -83,7 +80,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
                         {!!nodeSelected &&
                         <div className={classes.container}>
                             <ActionBox/>
-                            {nodeType === 'string' && <StringFieldPanel onChange={this.handleParamValuesChange}/>}
+                            {nodeType === 'string' && <StringFieldPanel paramValues={nodeSelected.params} onChange={this.handleParamValuesChange}/>}
                             <div className={classes.buttonContainer}>
                                 <Button
                                     variant={"contained"}

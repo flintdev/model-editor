@@ -4,6 +4,7 @@ import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
 import {DataType, Param} from "./interface";
 import TextField from "@material-ui/core/TextField";
+import {NodeParams} from "../../interface";
 
 const styles = createStyles({
     root: {
@@ -17,14 +18,12 @@ const styles = createStyles({
 
 export interface Props extends WithStyles<typeof styles>{
     params: Param[],
-    onChange: (paramValues: ParamValues) => void,
+    paramValues: NodeParams,
+    onChange: (paramValues: NodeParams) => void,
 }
 
-export interface ParamValues {
-    [key: string]: string | number
-}
 interface State {
-    paramValues: ParamValues
+    paramValues: NodeParams
 }
 
 class AutoForm extends React.Component<Props, object> {
@@ -33,23 +32,25 @@ class AutoForm extends React.Component<Props, object> {
     };
 
     componentDidMount(): void {
-        let paramValues: ParamValues = {};
-        const {params} = this.props;
+        let currentParamValues: NodeParams = {};
+        const {params, paramValues} = this.props;
         params.forEach(param => {
             const {defaultValue, key} = param;
-            if (!!defaultValue) {
-                paramValues[key] = defaultValue;
+            if (!!paramValues && paramValues.hasOwnProperty(key)) {
+                currentParamValues![key] = paramValues![key];
+            } else if (!!defaultValue) {
+                currentParamValues![key] = defaultValue;
             }
         });
-        this.setState({paramValues});
-        this.props.onChange(paramValues);
+        this.setState({paramValues: currentParamValues});
+        this.props.onChange(currentParamValues);
     }
 
     handleParamValueChange = (key: string, type: DataType) => (event: React.ChangeEvent<HTMLInputElement>) => {
         let {paramValues} = this.state;
         let value: string|number = event.target.value;
         if (type === "number") value = parseInt(value);
-        paramValues[key] = value;
+        paramValues![key] = value;
         this.setState({paramValues});
         this.props.onChange(paramValues);
     };
@@ -57,7 +58,7 @@ class AutoForm extends React.Component<Props, object> {
     renderStringInput = (param: Param) => {
         const {classes} = this.props;
         const {key, name, required, defaultValue, type} = param;
-        let value: string | number | undefined = this.state.paramValues[key];
+        let value: string | number | undefined = this.state.paramValues![key];
         value = !!value? value : defaultValue;
         return (
             <TextField
@@ -75,7 +76,7 @@ class AutoForm extends React.Component<Props, object> {
     renderNumberInput = (param: Param) => {
         const {classes} = this.props;
         const {key, name, required, defaultValue, type} = param;
-        let value: string | number | undefined = this.state.paramValues[key];
+        let value: string | number | undefined = this.state.paramValues![key];
         value = !!value? value : defaultValue;
         return (
             <TextField
@@ -94,7 +95,7 @@ class AutoForm extends React.Component<Props, object> {
     renderSelect = (param: Param) => {
         const {classes} = this.props;
         const {key, name, required, defaultValue, options, type} = param;
-        let value: string | number | undefined = this.state.paramValues[key];
+        let value: string | number | undefined = this.state.paramValues![key];
         value = !!value? value : defaultValue;
         return (
             <TextField
