@@ -10,6 +10,10 @@ const styles = createStyles({
     root: {
 
     },
+    chip: {
+        marginTop: 3,
+        marginBottom: 3
+    }
 });
 
 export interface Props extends WithStyles<typeof styles> {
@@ -42,7 +46,7 @@ class NodeTypeTag extends React.Component<Props, object> {
         const {classes, nodeType} = this.props;
         return (
             <span className={classes.root}>
-                <Chip label={nodeType} size={"small"} variant={"outlined"}/>
+                <Chip className={classes.chip} label={nodeType} size={"small"} variant={"outlined"}/>
             </span>
         )
     }

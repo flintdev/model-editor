@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import {DataHelper} from "../../controllers/utils/dataHelper";
 import {NodeParams, TreeNode} from "../../interface";
+import ObjectFieldPanel from "./ObjectFieldPanel";
 
 const styles = createStyles({
     root: {},
@@ -60,7 +61,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
         const {classes, schemaTree, fieldPanel} = this.props;
         const {anchor} = fieldPanel;
         const {nodeSelected} = schemaTree;
-        const nodeType = !!nodeSelected? nodeSelected.type : null;
+        const nodeType = !!nodeSelected ? nodeSelected.type : null;
         return (
             <div className={classes.root}>
                 <Popover
@@ -80,7 +81,16 @@ class FieldPanelContainer extends React.Component<Props, object> {
                         {!!nodeSelected &&
                         <div className={classes.container}>
                             <ActionBox/>
-                            {nodeType === 'string' && <StringFieldPanel paramValues={nodeSelected.params} onChange={this.handleParamValuesChange}/>}
+                            {nodeType === 'string' &&
+                            <StringFieldPanel
+                                paramValues={nodeSelected.params}
+                                onChange={this.handleParamValuesChange}
+                            />
+                            }
+                            {nodeType === "object" &&
+                            <ObjectFieldPanel/>
+                            }
+                            {nodeType !== 'object' &&
                             <div className={classes.buttonContainer}>
                                 <Button
                                     variant={"contained"}
@@ -90,7 +100,9 @@ class FieldPanelContainer extends React.Component<Props, object> {
                                 >
                                     <SaveIcon/>&nbsp;Save
                                 </Button>
+                                }
                             </div>
+                            }
                         </div>
                         }
                     </div>

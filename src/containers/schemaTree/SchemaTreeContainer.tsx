@@ -16,6 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = createStyles({
     root: {},
@@ -29,6 +30,11 @@ const styles = createStyles({
         paddingLeft: 10,
         paddingRight: 10,
         color: 'dimgrey',
+    },
+    nodeSpan: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        height: 40
     },
 });
 
@@ -107,16 +113,27 @@ class SchemaTreeContainer extends React.Component<Props, State> {
         const {classes} = this.props;
         const {id, name, type, children} = node;
         const label = (
-            <span>
+            <span className={classes.nodeSpan}>
                 {(!children || children.length === 0) && <span className={classes.labelSpan}>&bull;</span>}
                 {name}&nbsp;&nbsp;
                 <NodeTypeTag nodeType={type}/>&nbsp;&nbsp;
+                {type === "object" &&
+                <IconButton
+                    size={"small"}
+                    onClick={this.handleNodeEditButtonClick(node)}
+                >
+                    <AddIcon fontSize={"inherit"}/>
+                </IconButton>
+                }
+                {type !== "object" && type !== "array" &&
                 <IconButton
                     size={"small"}
                     onClick={this.handleNodeEditButtonClick(node)}
                 >
                     <EditIcon fontSize={"inherit"}/>
-                </IconButton>&nbsp;&nbsp;
+                </IconButton>
+                }
+                &nbsp;&nbsp;
             </span>);
         const props = {nodeId: id, label, key: id};
         const treeItem = !!children && children.length > 0 ? (
