@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const styles = createStyles({
     root: {},
@@ -24,6 +25,11 @@ const styles = createStyles({
     treeItemContent: {
         backgroundColor: 'white',
     },
+    labelSpan: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        color: 'dimgrey',
+    }
 });
 
 export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
@@ -99,9 +105,11 @@ class SchemaTreeContainer extends React.Component<Props, State> {
     };
 
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
+        const {classes} = this.props;
         const {id, name, type, children} = node;
         const label = (
             <span>
+                {(!children || children.length === 0) && <span className={classes.labelSpan}>&bull;</span>}
                 {name}&nbsp;&nbsp;
                 <NodeTypeTag nodeType={type}/>&nbsp;&nbsp;
                 <IconButton
@@ -118,7 +126,6 @@ class SchemaTreeContainer extends React.Component<Props, State> {
             </TreeItem>
         ) : (
             <TreeItem {...props}/>
-
         );
         return (
             <React.Fragment key={id}>
@@ -129,7 +136,6 @@ class SchemaTreeContainer extends React.Component<Props, State> {
 
     handleNodeEditButtonClick = (node: TreeNodeInterface) => (event: React.MouseEvent) => {
         event.stopPropagation();
-        console.log(node);
     };
 
     handleSwitchChange = (checked: boolean) => {
