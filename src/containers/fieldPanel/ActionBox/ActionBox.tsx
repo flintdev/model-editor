@@ -80,7 +80,12 @@ class ActionBox extends React.Component<Props, object> {
                     <tbody>
                     <tr>
                         <td>
-                            <Chip label={fieldName} variant={"outlined"} className={classes.chip}/>
+                            <Chip
+                                label={fieldName}
+                                variant={"outlined"}
+                                className={classes.chip}
+                                color={"primary"}
+                            />
                         </td>
                         <td className={classes.textRight}>
                             <IconButton

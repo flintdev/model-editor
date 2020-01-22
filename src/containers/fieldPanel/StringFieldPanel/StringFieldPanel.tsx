@@ -16,7 +16,7 @@ const styles = createStyles({
 });
 
 export interface Props extends WithStyles<typeof styles>{
-
+    onChange: (paramValues: ParamValues) => void,
 }
 
 class StringFieldPanel extends React.Component<Props, object> {
@@ -28,15 +28,11 @@ class StringFieldPanel extends React.Component<Props, object> {
 
     }
 
-    handleParamValuesChange = (params: ParamValues) => {
-        console.log(params);
-    };
-
     render() {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <AutoForm params={ParamsDef} onChange={this.handleParamValuesChange}/>
+                <AutoForm params={ParamsDef} onChange={this.props.onChange}/>
             </div>
         )
     }

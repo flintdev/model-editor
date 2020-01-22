@@ -6,9 +6,15 @@ import {connect} from 'react-redux';
 import {Dispatch} from "redux";
 import {StoreState} from "../../redux/state";
 import * as actions from "../../redux/modules/fieldPanel/actions";
+import * as schemaTreeActions from "../../redux/modules/schemaTree/actions";
 import ActionBox from "./ActionBox";
 import Popover from "@material-ui/core/Popover";
 import StringFieldPanel from "./StringFieldPanel";
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
+import {ParamValues} from "../../components/AutoForm";
+import {DataHelper} from "../../controllers/utils/dataHelper";
+import {TreeNode} from "../../interface";
 
 const styles = createStyles({
     root: {},
@@ -17,19 +23,41 @@ const styles = createStyles({
     },
     popoverContent: {
         padding: 10,
+    },
+    buttonContainer: {
+        marginTop: 10,
     }
 });
 
 export interface Props extends WithStyles<typeof styles>, StoreState {
-    closeFieldPanel: () => void
+    closeFieldPanel: () => void,
+    setTreeData: (treeData: TreeNode[]) => void,
 }
 
 class FieldPanelContainer extends React.Component<Props, object> {
-    state = {};
+    state = {
+        paramValues: {}
+    };
 
     componentDidMount(): void {
 
     }
+
+    handleSaveButtonClick = () => {
+        const {schemaTree} = this.props;
+        const {paramValues} = this.state;
+        const {nodeSelected, treeData} = schemaTree;
+        if (!nodeSelected) return false;
+        const newTreeData = new DataHelper().updateNodeParamsInTreeData(treeData, nodeSelected.id, paramValues);
+        console.log('new tree data', newTreeData);
+        this.props.setTreeData(newTreeData);
+        this.props.closeFieldPanel();
+    };
+
+    handleParamValuesChange = (paramValues: ParamValues) => {
+        console.log(paramValues);
+        this.setState({paramValues});
+    };
 
     render() {
         const {classes, schemaTree, fieldPanel} = this.props;
@@ -52,11 +80,20 @@ class FieldPanelContainer extends React.Component<Props, object> {
                     }}
                 >
                     <div className={classes.popoverContent}>
-
                         {!!nodeSelected &&
                         <div className={classes.container}>
                             <ActionBox/>
-                            {nodeType === 'string' && <StringFieldPanel/>}
+                            {nodeType === 'string' && <StringFieldPanel onChange={this.handleParamValuesChange}/>}
+                            <div className={classes.buttonContainer}>
+                                <Button
+                                    variant={"contained"}
+                                    color={"primary"}
+                                    size={"small"}
+                                    onClick={this.handleSaveButtonClick}
+                                >
+                                    <SaveIcon/>&nbsp;Save
+                                </Button>
+                            </div>
                         </div>
                         }
                     </div>
@@ -70,9 +107,10 @@ const mapStateToProps = (state: StoreState) => {
     return state;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.FieldPanelAction>) => {
+const mapDispatchToProps = (dispatch: Dispatch<actions.FieldPanelAction | schemaTreeActions.SchemaTreeAction>) => {
     return {
         closeFieldPanel: () => dispatch(actions.closeFieldPanel()),
+        setTreeData: (treeData: TreeNode[]) => dispatch((schemaTreeActions.setTreeData(treeData))),
     }
 };
 

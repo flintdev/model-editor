@@ -2,19 +2,28 @@
 
 import {TreeNode} from "../../interface";
 import * as _ from 'lodash';
+import {ParamValues} from "../../components/AutoForm";
 
-type NodePath = Array<string | number>;
+type NodePath = Array<string|number>;
 
 export class DataHelper {
 
     findPathOfTreeNode = (treeData: TreeNode[], nodeId: string): NodePath => {
-        let path: Array<string | number> = [];
+        let path: Array<string|number> = [];
         return this.recurToGetPath(treeData, path, nodeId);
+    };
+
+    updateNodeParamsInTreeData = (treeData: TreeNode[], nodeId: string, paramValues: ParamValues): TreeNode[] => {
+        let path: NodePath = this.findPathOfTreeNode(treeData, nodeId);
+        if (!path || path.length === 0) return treeData;
+        const paramsPath: Array<string|number> = [...path, 'params'];
+        treeData = _.set(treeData, paramsPath, paramValues);
+        return treeData;
     };
 
     removeTreeNodeById = (treeData: TreeNode[], nodeId: string): TreeNode[] => {
         let path: NodePath = this.findPathOfTreeNode(treeData, nodeId);
-        if (!path) return treeData;
+        if (!path || path.length === 0) return treeData;
         else if (path.length === 1) {
             treeData.splice(path[0] as number, 1);
             return treeData;
@@ -34,7 +43,7 @@ export class DataHelper {
             } else if (!!node.children && node.children.length > 0) {
                 const newPath = [...path, i, 'children'];
                 const result = this.recurToGetPath(node.children, newPath, nodeId);
-                if (!!result) return result;
+                if (result.length > 0) return result;
             }
         }
         return [];
