@@ -9,10 +9,22 @@ import { StoreState } from "../../../redux/state";
 import * as actions from "../../../redux/modules/fieldPanel/actions";
 import * as schemaTreeActions from '../../../redux/modules/schemaTree/actions';
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from '@material-ui/icons/Delete';
+import Chip from "@material-ui/core/Chip";
 
 const styles = createStyles({
     root: {
         
+    },
+    table: {
+        width: '100%',
+    },
+    textRight: {
+        textAlign: 'right'
+    },
+    chip: {
+        borderRadius: 4,
     },
 });
 
@@ -58,9 +70,28 @@ class ActionBox extends React.Component<Props, object> {
 
     render() {
         const {classes, schemaTree, fieldPanel} = this.props;
+        const {nodeSelected} = schemaTree;
+        const fieldName = !!nodeSelected? nodeSelected.name : '';
         return (
             <div className={classes.root}>
-                {this.renderRemoveFieldButton()}
+                <table className={classes.table}>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <Chip label={fieldName} variant={"outlined"} className={classes.chip}/>
+                        </td>
+                        <td className={classes.textRight}>
+                            <IconButton
+                                size={"small"}
+                                color={"secondary"}
+                                onClick={this.handleRemoveNodeClick}
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         )
     }

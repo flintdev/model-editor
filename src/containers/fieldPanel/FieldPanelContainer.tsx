@@ -15,7 +15,7 @@ const styles = createStyles({
         width: 200,
     },
     popoverContent: {
-        padding: 20,
+        padding: 10,
     }
 });
 
@@ -54,7 +54,6 @@ class FieldPanelContainer extends React.Component<Props, object> {
                         {!!nodeSelected &&
                         <div className={classes.container}>
                             <ActionBox/>
-                            {nodeSelected.name}
                         </div>
                         }
                     </div>
