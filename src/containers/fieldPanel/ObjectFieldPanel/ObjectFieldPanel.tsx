@@ -4,6 +4,9 @@ import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
+import AutoForm from "../../../components/AutoForm";
+import {ParamRef} from "./definition";
+import {DefaultObject, NodeParams} from "../../../interface";
 
 const styles = createStyles({
     root: {
@@ -18,9 +21,17 @@ export interface Props extends WithStyles<typeof styles>{
 
 }
 
-class ObjectFieldPanel extends React.Component<Props, object> {
-    state = {
+interface ParamValues {
+    name?: string,
+    type?: string,
+}
 
+interface State {
+    paramValues: ParamValues
+}
+class ObjectFieldPanel extends React.Component<Props, object> {
+    state: State = {
+        paramValues: {}
     };
 
     componentDidMount(): void {
@@ -28,13 +39,22 @@ class ObjectFieldPanel extends React.Component<Props, object> {
     }
 
     handleAddButtonClick = () => {
+        const {paramValues} = this.state;
+        const {name, type} = paramValues;
+    };
 
+    handleParamValuesChange = (paramValues: ParamValues) => {
+        this.setState({paramValues});
     };
 
     render() {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
+                <AutoForm
+                    params={ParamRef}
+                    onChange={this.handleParamValuesChange}
+                />
                 <div className={classes.buttonContainer}>
                     <Button
                         variant={"contained"}

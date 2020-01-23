@@ -4,7 +4,7 @@ import * as React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/core/styles';
 import {DataType, Param} from "./interface";
 import TextField from "@material-ui/core/TextField";
-import {NodeParams} from "../../interface";
+import {DefaultObject, NodeParams} from "../../interface";
 
 const styles = createStyles({
     root: {
@@ -18,12 +18,12 @@ const styles = createStyles({
 
 export interface Props extends WithStyles<typeof styles>{
     params: Param[],
-    paramValues: NodeParams,
-    onChange: (paramValues: NodeParams) => void,
+    paramValues?: DefaultObject,
+    onChange: (paramValues: DefaultObject) => void,
 }
 
 interface State {
-    paramValues: NodeParams
+    paramValues: DefaultObject
 }
 
 class AutoForm extends React.Component<Props, object> {
@@ -32,7 +32,7 @@ class AutoForm extends React.Component<Props, object> {
     };
 
     componentDidMount(): void {
-        let currentParamValues: NodeParams = {};
+        let currentParamValues: DefaultObject = {};
         const {params, paramValues} = this.props;
         params.forEach(param => {
             const {defaultValue, key} = param;
