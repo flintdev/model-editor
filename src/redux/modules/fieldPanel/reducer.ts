@@ -14,7 +14,6 @@ export function reducer(state: object, action: FieldPanelAction) {
             return update(state, {
                 anchor: {$set: undefined}
             });
-
         default:
             return state;
     }

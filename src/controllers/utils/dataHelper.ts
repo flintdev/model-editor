@@ -1,6 +1,6 @@
 // src/controllers/utils/dataHelper.ts
 
-import {TreeNode} from "../../interface";
+import {NodeType, TreeNode} from "../../interface";
 import * as _ from 'lodash';
 import {NodeParams} from "../../interface";
 
@@ -18,6 +18,28 @@ export class DataHelper {
         if (!path || path.length === 0) return treeData;
         const paramsPath: Array<string|number> = [...path, 'params'];
         treeData = _.set(treeData, paramsPath, paramValues);
+        return treeData;
+    };
+
+    addTreeNode = (treeData: TreeNode[], parentNodeId: string, nodeName: string, nodeType: NodeType): TreeNode[] => {
+        let parentNodePath: NodePath = this.findPathOfTreeNode(treeData, parentNodeId);
+        let nodePath: NodePath;
+        if (!parentNodePath || parentNodePath.length === 0) {
+            nodePath = [treeData.length];
+        } else {
+            const parentNode: TreeNode = _.get(treeData, parentNodePath);
+            if (!!parentNode.children && parentNode.children.length > 0) {
+                nodePath = [...parentNodePath, 'children', parentNode.children.length];
+            } else {
+                nodePath = [...parentNodePath, 'children', 0];
+            }
+        }
+        const nodeData: TreeNode = {
+            id: ['root', ...nodePath].join('-'),
+            name: nodeName,
+            type: nodeType
+        };
+        treeData = _.set(treeData, nodePath, nodeData);
         return treeData;
     };
 

@@ -100,7 +100,6 @@ class FieldPanelContainer extends React.Component<Props, object> {
                                 >
                                     <SaveIcon/>&nbsp;Save
                                 </Button>
-                                }
                             </div>
                             }
                         </div>

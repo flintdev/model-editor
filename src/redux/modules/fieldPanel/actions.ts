@@ -2,12 +2,30 @@
 
 import * as types from './types';
 
-export interface AddSubfield {
-    type: typeof types.ADD_SUBFIELD,
+// functions
+
+export function addField(name: string, dataType: string): AddField {
+    return { type: types.ADD_FIELD, name, dataType }
 }
 
-export function addSubfield(): AddSubfield {
-    return { type: types.ADD_SUBFIELD }
+export function openFieldPanel(anchor: Element): OpenFieldPanel {
+    return { type: types.OPEN_FIELD_PANEL, anchor }
+}
+
+export function closeFieldPanel(): CloseFieldPanel {
+    return { type: types.CLOSE_FIELD_PANEL }
+}
+
+// interfaces
+
+export interface AddField {
+    type: typeof types.ADD_FIELD,
+    name: string
+    dataType: string,
+}
+
+export interface CloseFieldPanel {
+    type: typeof types.CLOSE_FIELD_PANEL,
 }
 
 export interface OpenFieldPanel {
@@ -15,20 +33,8 @@ export interface OpenFieldPanel {
     anchor: Element | undefined
 }
 
-export function openFieldPanel(anchor: Element): OpenFieldPanel {
-    return { type: types.OPEN_FIELD_PANEL, anchor }
-}
-
-export interface CloseFieldPanel {
-    type: typeof types.CLOSE_FIELD_PANEL,
-}
-
-export function closeFieldPanel(): CloseFieldPanel {
-    return { type: types.CLOSE_FIELD_PANEL }
-}
-
 
 export type FieldPanelAction =
     OpenFieldPanel |
     CloseFieldPanel |
-    AddSubfield;
+    AddField;

@@ -7,12 +7,14 @@ export const ParamRef: Param[] = [
         key: 'name',
         name: 'Field Name',
         type: 'string',
+        defaultValue: '',
         required: true,
     },
     {
         key: 'type',
         name: 'Data Type',
         type: 'select',
+        defaultValue: 'string',
         options: [
             'string',
             'number',

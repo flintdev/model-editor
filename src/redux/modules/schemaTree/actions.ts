@@ -1,15 +1,31 @@
 // src/redux/modules/schemaTree/actions.ts
 
 import * as types from './types';
-import {TreeNode} from "../../../interface";
+import {NodeType, TreeNode} from "../../../interface";
+
+// functions
+
+export function selectNode(node: TreeNode): SelectNode {
+    return { type: types.SELECT_NODE, node }
+}
+
+export function setTreeData(treeData: Array<TreeNode>): SetTreeData {
+    return { type: types.SET_TREE_DATA, treeData }
+}
+
+export function addNode(name: string, dataType: NodeType): AddNode {
+    return { type: types.ADD_NODE, name, dataType }
+}
+
+export function removeNode(): RemoveNode {
+    return { type: types.REMOVE_NODE }
+}
+
+// interfaces
 
 export interface SelectNode {
     type: typeof types.SELECT_NODE,
     node: TreeNode,
-}
-
-export function selectNode(node: TreeNode): SelectNode {
-    return { type: types.SELECT_NODE, node }
 }
 
 export interface SetTreeData {
@@ -17,17 +33,19 @@ export interface SetTreeData {
     treeData: Array<TreeNode>,
 }
 
-export function setTreeData(treeData: Array<TreeNode>): SetTreeData {
-    return { type: types.SET_TREE_DATA, treeData }
+export interface AddNode {
+    type: typeof types.ADD_NODE,
+    name: string,
+    dataType: NodeType,
 }
 
 export interface RemoveNode {
     type: typeof types.REMOVE_NODE,
 }
 
-export function removeNode(): RemoveNode {
-    return { type: types.REMOVE_NODE }
-}
-
-export type SchemaTreeAction = SelectNode | SetTreeData | RemoveNode;
+export type SchemaTreeAction =
+    SelectNode |
+    SetTreeData |
+    AddNode |
+    RemoveNode;
 
