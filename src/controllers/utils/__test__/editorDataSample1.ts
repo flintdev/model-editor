@@ -11,6 +11,11 @@ export const editorDataSample1: EditorData = {
                     id: 'root-creator-name',
                     name: 'name',
                     type: 'string',
+                    params: {
+                        format: 'test',
+                        minLength: 1,
+                        pattern: '^123'
+                    }
                 },
                 {
                     id: 'root-creator-password',
@@ -23,6 +28,11 @@ export const editorDataSample1: EditorData = {
             id: 'root-time',
             name: 'time',
             type: 'string',
+            params: {
+                format: 'date',
+                minLength: 2,
+                pattern: '^234'
+            }
         },
         {
             id: 'root-records',

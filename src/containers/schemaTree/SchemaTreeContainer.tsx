@@ -41,7 +41,8 @@ const styles = createStyles({
 
 export interface Props extends WithStyles<typeof styles>, SchemaTreeState {
     modelName: string,
-    editorData: EditorData | undefined,
+    editorData?: EditorData,
+    onUpdated?: (schemaData: object, editorData: object) => void,
     setTreeData: (treeData: Array<TreeNodeInterface>) => void,
     selectNode: (node: TreeNodeInterface | null) => void,
     openFieldPanel: (anchor: Element) => void,
@@ -59,7 +60,6 @@ class SchemaTreeContainer extends React.Component<Props, State> {
     state: State = {
         expandedKeys: ['root'],
     };
-    treeNodeMap: TreeNodeMap = {};
 
     componentDidMount(): void {
         const {editorData} = this.props;
@@ -72,7 +72,7 @@ class SchemaTreeContainer extends React.Component<Props, State> {
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<object>, snapshot?: any): void {
         const {treeData} = this.props;
         if (prevProps.treeData !== treeData) {
-            this.treeNodeMap = this.getTreeNodeMap(treeData);
+            const editorData: EditorData = {treeData: treeData};
         }
     }
 
@@ -170,7 +170,7 @@ class SchemaTreeContainer extends React.Component<Props, State> {
                 >
                     <TreeItem
                         label={
-                            <span>
+                            <span className={classes.nodeSpan}>
                                 {modelName}&nbsp;&nbsp;
                                 <IconButton
                                     size={"small"}

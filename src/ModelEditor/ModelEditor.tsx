@@ -27,13 +27,14 @@ class ModelEditor extends React.Component<Props, object> {
     }
 
     render() {
-        const {classes, modelName, editorData, onSaved} = this.props;
+        const {classes, modelName, editorData, onUpdated} = this.props;
         return (
             <Provider store={store}>
                 <div className={classes.root}>
                     <SchemaTreeContainer
                         modelName={modelName}
                         editorData={editorData}
+                        onUpdated={onUpdated}
                     />
                 </div>
             </Provider>

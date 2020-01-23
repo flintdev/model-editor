@@ -1,6 +1,7 @@
+// src/controllers/utils/__test__/dataHelper.test.ts
+
 import {DataHelper} from "../dataHelper";
 import {editorDataSample1} from "./editorDataSample1";
-import {TreeNode} from "../../../interface";
 
 
 test('find path - 1', () => {
