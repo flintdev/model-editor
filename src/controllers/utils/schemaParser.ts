@@ -26,6 +26,13 @@ export class SchemaParser {
                     type,
                     properties: data
                 };
+            } else if (type === 'array') {
+                const children = !!node.children? node.children : [];
+                const data = this.recurToGenerateSchema(children, {});
+                properties[name] = {
+                    type,
+                    items: data
+                };
             }
         }
         return properties;

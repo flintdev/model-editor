@@ -40,8 +40,8 @@ export const editorDataSample1: EditorData = {
             type: 'array',
             children: [
                 {
-                    id: 'root-records-items',
-                    name: 'items',
+                    id: 'root-records-info',
+                    name: 'info',
                     type: 'string',
                 },
             ]
