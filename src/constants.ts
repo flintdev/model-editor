@@ -1,5 +1,7 @@
 // src/constants.ts
 
+import {TreeNode} from "./interface";
+
 export enum NodeTypeOption {
     string = 'string',
     number = 'number',
@@ -16,3 +18,11 @@ export enum StringFormat {
     byte = 'byte',
     binary = 'binary'
 }
+
+export const getRootNode = (modelName: string): TreeNode => {
+    return {
+        id: 'root',
+        name: modelName,
+        type: 'root'
+    }
+};

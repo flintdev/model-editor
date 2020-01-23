@@ -87,10 +87,10 @@ class FieldPanelContainer extends React.Component<Props, object> {
                                 onChange={this.handleParamValuesChange}
                             />
                             }
-                            {nodeType === "object" &&
+                            {(nodeType === "object" || nodeType === "root") &&
                             <ObjectFieldPanel/>
                             }
-                            {nodeType !== 'object' &&
+                            {nodeType !== 'object' && nodeType !== "root" &&
                             <div className={classes.buttonContainer}>
                                 <Button
                                     variant={"contained"}

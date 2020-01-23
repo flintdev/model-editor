@@ -17,6 +17,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
+import {getRootNode} from "../../constants";
 
 const styles = createStyles({
     root: {},
@@ -156,34 +157,9 @@ class SchemaTreeContainer extends React.Component<Props, State> {
         this.props.openFieldPanel(event.currentTarget);
     };
 
-    handleSwitchChange = (checked: boolean) => {
-        const {treeData} = this.props;
-        let expandedKeys: Array<string>;
-        if (checked) {
-            expandedKeys = this.getAllNodeIds(treeData);
-        } else {
-            expandedKeys = ['root'];
-        }
-        this.setState({expandedKeys});
-    };
-
-    handleTreeNodeSelect = (selectedKeys: string[]) => {
-        if (selectedKeys.length > 0) {
-            const nodeId = selectedKeys[0];
-            let treeNodeSelected: TreeNodeInterface;
-            if (nodeId === 'root') {
-                treeNodeSelected = {id: nodeId, type: "root", name: this.props.modelName};
-            } else {
-                treeNodeSelected = this.treeNodeMap[nodeId];
-            }
-            this.props.selectNode(treeNodeSelected);
-        } else {
-            this.props.selectNode(null);
-        }
-    };
-
     render() {
-        const {classes, modelName, treeData, nodeSelected, _mark} = this.props;
+        const {classes, modelName, treeData, _mark} = this.props;
+        const rootNode = getRootNode(modelName);
         return (
             <div className={classes.root}>
                 <TreeView
@@ -193,7 +169,17 @@ class SchemaTreeContainer extends React.Component<Props, State> {
                     defaultExpanded={['root']}
                 >
                     <TreeItem
-                        label={modelName}
+                        label={
+                            <span>
+                                {modelName}&nbsp;&nbsp;
+                                <IconButton
+                                    size={"small"}
+                                    onClick={this.handleNodeEditButtonClick(rootNode)}
+                                >
+                                    <AddIcon fontSize={"inherit"}/>
+                                </IconButton>
+                            </span>
+                        }
                         key={'root'}
                         nodeId={'root'}
                     >
