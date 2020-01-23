@@ -16,7 +16,8 @@ export function reducer(state: SchemaTreeState, action: SchemaTreeAction) {
             });
         case types.SET_TREE_DATA:
             return update(state, {
-                treeData: {$set: action.treeData}
+                treeData: {$set: action.treeData},
+                _mark: {$set: state._mark + 1}
             });
         case types.ADD_NODE:
             if (!state.nodeSelected) return state;

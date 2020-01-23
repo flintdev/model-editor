@@ -43,6 +43,10 @@ class ExampleContainer extends React.Component<Props, object> {
                     <ModelEditor
                         modelName={"ExampleModel"}
                         editorData={editorDataSample1}
+                        onUpdated={(schemaData: object, editorData: object) => {
+                            console.log('schemaData', schemaData);
+                            console.log('editorData', editorData);
+                        }}
                     />
                 </div>
             </div>

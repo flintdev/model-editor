@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import {getRootNode} from "../../constants";
+import {SchemaParser} from "../../controllers/utils/schemaParser";
 
 const styles = createStyles({
     root: {},
@@ -70,9 +71,11 @@ class SchemaTreeContainer extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<object>, snapshot?: any): void {
-        const {treeData} = this.props;
-        if (prevProps.treeData !== treeData) {
+        const {treeData, onUpdated, _mark} = this.props;
+        if (prevProps._mark !== _mark) {
             const editorData: EditorData = {treeData: treeData};
+            const schemaData = new SchemaParser(treeData).convertToOpenAPIV3Schema();
+            if (!!onUpdated) onUpdated(schemaData, editorData);
         }
     }
 
