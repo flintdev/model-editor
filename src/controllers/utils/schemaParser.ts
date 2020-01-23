@@ -37,14 +37,4 @@ export class SchemaParser {
         }
         return properties;
     };
-
-    private convertStringNode = (node: TreeNode) => {
-
-    };
-
-    private convertObjectNode = (node: TreeNode) => {
-
-    };
-
-
 }
