@@ -121,7 +121,7 @@ class SchemaTreeContainer extends React.Component<Props, State> {
                 {(!children || children.length === 0) && <span className={classes.labelSpan}>&bull;</span>}
                 {name}&nbsp;&nbsp;
                 <NodeTypeTag nodeType={type}/>&nbsp;&nbsp;
-                {type === "object" &&
+                {(type === "object" || (type === "array" && (!children || children.length === 0))) &&
                 <IconButton
                     size={"small"}
                     onClick={this.handleNodeEditButtonClick(node)}

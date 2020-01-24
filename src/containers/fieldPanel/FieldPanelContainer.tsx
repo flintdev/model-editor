@@ -15,6 +15,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import {DataHelper} from "../../controllers/utils/dataHelper";
 import {NodeParams, TreeNode} from "../../interface";
 import ObjectFieldPanel from "./ObjectFieldPanel";
+import ArrayFieldPanel from "./ArrayFieldPanel";
 
 const styles = createStyles({
     root: {},
@@ -90,7 +91,10 @@ class FieldPanelContainer extends React.Component<Props, object> {
                             {(nodeType === "object" || nodeType === "root") &&
                             <ObjectFieldPanel/>
                             }
-                            {nodeType !== 'object' && nodeType !== "root" &&
+                            {nodeType === 'array' &&
+                            <ArrayFieldPanel/>
+                            }
+                            {nodeType !== 'object' && nodeType !== "root" && nodeType !== "array" &&
                             <div className={classes.buttonContainer}>
                                 <Button
                                     variant={"contained"}

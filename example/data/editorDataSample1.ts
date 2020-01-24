@@ -28,13 +28,6 @@ export const editorDataSample1: EditorData = {
             id: 'root-records',
             name: 'records',
             type: 'array',
-            children: [
-                {
-                    id: 'root-records-items',
-                    name: 'items',
-                    type: 'string',
-                },
-            ]
         }
     ]
 };
