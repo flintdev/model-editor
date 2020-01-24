@@ -31,7 +31,7 @@ export class SchemaParser {
                 const data = this.recurToGenerateSchema(children, {});
                 properties[name] = {
                     type,
-                    items: data
+                    ...data
                 };
             }
         }
