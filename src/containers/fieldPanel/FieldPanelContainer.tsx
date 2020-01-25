@@ -94,7 +94,7 @@ class FieldPanelContainer extends React.Component<Props, object> {
                             {nodeType === 'array' &&
                             <ArrayFieldPanel/>
                             }
-                            {nodeType !== 'object' && nodeType !== "root" && nodeType !== "array" &&
+                            {nodeType !== 'object' && nodeType !== "root" && nodeType !== "array" && nodeType !== "boolean" &&
                             <div className={classes.buttonContainer}>
                                 <Button
                                     variant={"contained"}
