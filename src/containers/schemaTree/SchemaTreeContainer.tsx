@@ -63,19 +63,28 @@ class SchemaTreeContainer extends React.Component<Props, State> {
     };
 
     componentDidMount(): void {
+        this.reloadTreeData();
+    }
+
+    reloadTreeData = () => {
         const {editorData} = this.props;
         if (!!editorData?.treeData) {
             const {treeData} = editorData;
             this.props.setTreeData(treeData);
+        } else {
+            this.props.setTreeData([]);
         }
-    }
+    };
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<object>, snapshot?: any): void {
-        const {treeData, onUpdated, _mark} = this.props;
+        const {editorData, treeData, onUpdated, _mark} = this.props;
         if (prevProps._mark !== _mark) {
             const editorData: EditorData = {treeData: treeData};
             const schemaData = new SchemaParser(treeData).convertToOpenAPIV3Schema();
             if (!!onUpdated) onUpdated(schemaData, editorData);
+        }
+        if (prevProps.editorData !== editorData) {
+            this.reloadTreeData();
         }
     }
 
@@ -95,22 +104,6 @@ class SchemaTreeContainer extends React.Component<Props, State> {
         if (!!children) {
             children.forEach(node => this.recurToGetTreeNodeMap(treeNodeMap, node));
         }
-    };
-
-    getTreeNodeMap = (treeData: TreeNodeInterface[]) => {
-        let treeNodeMap: TreeNodeMap = {};
-        treeData.forEach(node => {
-            this.recurToGetTreeNodeMap(treeNodeMap, node);
-        });
-        return treeNodeMap;
-    };
-
-    getAllNodeIds = (treeData: Array<TreeNodeInterface>) => {
-        let nodeIds: Array<string> = ['root'];
-        treeData.forEach(node => {
-            this.recurToGetNodeIds(nodeIds, node);
-        });
-        return nodeIds;
     };
 
     recurToRenderTreeNode = (node: TreeNodeInterface) => {
